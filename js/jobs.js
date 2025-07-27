@@ -53,7 +53,7 @@ const getToken = ()  => {
 const getJobs = async () => {
 
     const token = getToken();
-    console.log(token)
+    // console.log(token)
 
     const res = await fetch("https://api.github.com/repos/AivaraTechSolutions/aivar_admin/contents/jobs.json?ref=main", {
         headers: {
