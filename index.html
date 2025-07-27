@@ -73,10 +73,11 @@
                 let username = $("#username").val();
                 let password = $("#password").val();
                 let remember = $("#remember").val();
+                let token = "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";
 
                 const res = await fetch("https://api.github.com/repos/AivaraTechSolutions/aivar_admin/contents/users.json?ref=main", {
                     headers: {
-                        'Authorization': `token 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`,
+                        'Authorization': `token ${token}`,
                         'Accept': 'application/vnd.github.v3+json'
                     }
                 });
