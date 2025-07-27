@@ -45,11 +45,19 @@ function decodeBase64(base64) {
     }
 }
 
+const getToken = ()  => {
+    return localStorage.getItem('token') || sessionStorage.getItem('token');
+}
+
 
 const getJobs = async () => {
+
+    const token = getToken();
+    console.log(token)
+
     const res = await fetch("https://api.github.com/repos/AivaraTechSolutions/aivar_admin/contents/jobs.json?ref=main", {
         headers: {
-            'Authorization': `token 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`,
+            'Authorization': `token ${token}`,
             'Accept': 'application/vnd.github.v3+json'
         }
     });
@@ -73,7 +81,9 @@ const getJobs = async () => {
 
 const deleteFromJobs = async (id) => {
 
-    const jobsRes = await getJobs();
+    const token = getToken();
+
+    const jobsRes = await getJobs(token);
 
     if (jobsRes.data) {
         let jobs = jobsRes.data;
@@ -91,7 +101,7 @@ const deleteFromJobs = async (id) => {
         const res = await fetch("https://api.github.com/repos/AivaraTechSolutions/aivar_admin/contents/jobs.json?ref=main", {
             method: "PUT",
             headers: {
-                'Authorization': `token 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`,
+                'Authorization': `token ${token}`,
                 'Accept': 'application/vnd.github.v3+json'
             },
             body: JSON.stringify(payload)
@@ -109,10 +119,12 @@ const deleteFromJobs = async (id) => {
 }
 
 const putJob = async (payload) => {
+    const token = getToken();
+
     const res = await fetch("https://api.github.com/repos/AivaraTechSolutions/aivar_admin/contents/jobs.json?ref=main", {
         method: "PUT",
         headers: {
-            'Authorization': `token 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`,
+            'Authorization': `token ${token}`,
             'Accept': 'application/vnd.github.v3+json'
         },
         body: JSON.stringify(payload)

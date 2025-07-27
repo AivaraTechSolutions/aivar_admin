@@ -40,6 +40,11 @@
                 <input type="password" name="password" value="" id="password" class="form-control border border-1" />
             </div>
 
+            <div data-mdb-input-init class="form-outline mb-4">
+                <label class="form-label" for="form2Example2">Token</label>
+                <input type="password" name="token" value="" id="token" required class="form-control border border-1" />
+            </div>
+
             <!-- 2 column grid layout for inline styling -->
             <div class="row mb-4">
                 <div class="col d-flex justify-content-center">
@@ -72,37 +77,48 @@
                 event.preventDefault();
                 let username = $("#username").val();
                 let password = $("#password").val();
+                let token = $("#token").val();
                 let remember = $("#remember").val();
-                let token = "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";
 
-                const res = await fetch("https://api.github.com/repos/AivaraTechSolutions/aivar_admin/contents/users.json?ref=main", {
-                    headers: {
-                        'Authorization': `token ${token}`,
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
-                });
-                // console.log(data)
-
-                if (res.status == 200) {
-                    const data = await res.json();
-                    // console.log(data.content)
-                    const users = JSON.parse(decodeBase64(data.content));
-                    // console.log(users[username])
-
-                    if (users[username] === password) {
-                        if ($('#remember').is(':checked')) {
-                            localStorage.setItem('loggedIn', 'true');
-                            localStorage.setItem('username', username);
-                        } else {
-                            sessionStorage.setItem('loggedIn', 'true');
-                            sessionStorage.setItem('username', username);
+                
+                try {
+                    const res = await fetch("https://api.github.com/repos/AivaraTechSolutions/aivar_admin/contents/users.json?ref=main", {
+                        headers: {
+                            'Authorization': `token ${token}`,
+                            'Accept': 'application/vnd.github.v3+json'
                         }
-                        window.location.href = 'dashboard.html';
+                    });
+                    console.log(res) 
+                    if (res.status == 200) {
+                        const data = await res.json();
+                        // console.log(data.content)
+                        const users = JSON.parse(decodeBase64(data.content));
+                        // console.log(users[username])
+                        
+                        if (users[username] === password) {
+                            if ($('#remember').is(':checked')) {
+                                localStorage.setItem('loggedIn', 'true');
+                                localStorage.setItem('username', username);
+                                localStorage.setItem('token', token);
+                            } else {
+                                sessionStorage.setItem('loggedIn', 'true');
+                                sessionStorage.setItem('username', username);
+                                sessionStorage.setItem('token', token);
+                            }
+                            window.location.href = 'dashboard.html';
+                        } else {
+                            console.log("Err")
+                            throw new Error("Invalid credentials")
+                        }
                     } else {
-                        $("#message").html("Invalid credentials")
+                        console.log("Err")
+                        throw new Error("Invalid credentials")
                     }
+                } catch(err) {
+                    console.log("Error")
+                    $("#message").html("Invalid credentials")
                 }
-
+                    
             })
         })
     </script>

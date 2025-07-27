@@ -173,12 +173,6 @@
         $(document).ready(async () => {
 
             const loadTableData = async () => {
-                const res = await fetch("https://api.github.com/repos/aivara-tech-services/data/contents/jobs.json?ref=main", {
-                    headers: {
-                        'Authorization': `token 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`,
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
-                });
 
                 const data = await getJobs();
 
