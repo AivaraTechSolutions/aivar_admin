@@ -49,7 +49,7 @@ function decodeBase64(base64) {
 const getJobs = async () => {
     const res = await fetch("https://api.github.com/repos/AivaraTechSolutions/aivar_admin/contents/jobs.json?ref=main", {
         headers: {
-            'Authorization': `token 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`,
+            'Authorization': `token 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`,
             'Accept': 'application/vnd.github.v3+json'
         }
     });
@@ -91,7 +91,7 @@ const deleteFromJobs = async (id) => {
         const res = await fetch("https://api.github.com/repos/AivaraTechSolutions/aivar_admin/contents/jobs.json?ref=main", {
             method: "PUT",
             headers: {
-                'Authorization': `token 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`,
+                'Authorization': `token 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`,
                 'Accept': 'application/vnd.github.v3+json'
             },
             body: JSON.stringify(payload)
@@ -112,7 +112,7 @@ const putJob = async (payload) => {
     const res = await fetch("https://api.github.com/repos/AivaraTechSolutions/aivar_admin/contents/jobs.json?ref=main", {
         method: "PUT",
         headers: {
-            'Authorization': `token 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`,
+            'Authorization': `token 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`,
             'Accept': 'application/vnd.github.v3+json'
         },
         body: JSON.stringify(payload)
